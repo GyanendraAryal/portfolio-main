@@ -7,6 +7,7 @@ import PageWrapper from './animate/PageWrapper'
 import ErrorBoundary from './Components/ErrorBoundary'
 import LoadingFallback from './Components/LoadingFallback'
 import { ThemeProvider } from './context/ThemeContext'
+import { ChatProvider } from './context/ChatContext'
 
 const Home = lazy(() => import('./Pages/Home'))
 const Services = lazy(() => import('./Pages/Services'))
@@ -55,7 +56,9 @@ createRoot(document.getElementById('root')).render(
   <ErrorBoundary>
     <PageWrapper>
       <ThemeProvider>
-        <RouterProvider router={router} />
+        <ChatProvider>
+          <RouterProvider router={router} />
+        </ChatProvider>
       </ThemeProvider>
     </PageWrapper>
   </ErrorBoundary>

@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom'
 import Navbar from './Components/Navbar'
 import Footer from './Components/Footer'
 import { PortfolioProfileProvider } from './context/PortfolioProfileContext'
+import ChatWidget from './components/ChatWidget/ChatWidget'
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <Navbar />
       <Outlet />
       <Footer />
+      <ChatWidget />
     </PortfolioProfileProvider>
   )
 }

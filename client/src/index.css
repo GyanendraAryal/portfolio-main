@@ -273,6 +273,12 @@ body {
       background-position: 100% 50%;
     }
   }
+
+  /* Chat widget typing dots */
+  @keyframes chatDot {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40%           { transform: scale(1);   opacity: 1; }
+  }
 }
 
 /* ============================================================
