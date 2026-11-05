@@ -1,11 +1,22 @@
 from django.contrib import admin
 from django import forms
 from django.core.exceptions import ValidationError
+from django.db import transaction
 from django.urls import reverse
 from django.utils.html import format_html
 
-from .models import PortfolioImage, Resume, Contact
+from .models import Contact, PortfolioImage, Resume, ResumeIndexJob, ResumeIndexState
 from .validators import get_resume_file_error
+
+
+def _enqueue_index_job(content_hash: str) -> None:
+    """Insert a pending indexing job unless one already exists for this hash."""
+    exists = ResumeIndexJob.objects.filter(
+        content_hash=content_hash,
+        status__in=('pending', 'running'),
+    ).exists()
+    if not exists:
+        ResumeIndexJob.objects.create(content_hash=content_hash, status='pending')
 
 
 @admin.register(PortfolioImage)
@@ -77,8 +88,8 @@ class ResumeAdmin(admin.ModelAdmin):
     list_filter = ['is_active', 'created_at']
     search_fields = ['title']
     ordering = ['-created_at']
-    readonly_fields = ['file_url', 'public_id', 'created_at']
-    fields = ['title', 'is_active', 'resume_file', 'file_url', 'public_id', 'created_at']
+    readonly_fields = ['file_url', 'public_id', 'created_at', 'content_hash']
+    fields = ['title', 'is_active', 'resume_file', 'file_url', 'public_id', 'created_at', 'content_hash']
 
     @admin.display(description="Resume file")
     def file_link(self, obj):
@@ -89,10 +100,14 @@ class ResumeAdmin(admin.ModelAdmin):
             obj.file_url = request.build_absolute_uri(
                 reverse("resume_file", kwargs={"file_path": "resume.pdf"})
             )
-        super().save_model(request, obj, form, change)
+        with transaction.atomic():
+            super().save_model(request, obj, form, change)
+            # Belt-and-suspenders Python outbox insert; the Postgres trigger is the fallback.
+            if obj.content_hash and obj.is_active:
+                _enqueue_index_job(obj.content_hash)
 
     def get_fields(self, request, obj=None):
-        fields = super().get_fields(request, obj)
+        fields = list(super().get_fields(request, obj))
         if obj is not None and "resume_file" in fields:
             fields.remove("resume_file")
         return fields
@@ -100,6 +115,29 @@ class ResumeAdmin(admin.ModelAdmin):
     def delete_queryset(self, _request, queryset):
         for resume in queryset.iterator():
             resume.delete()
+
+
+@admin.register(ResumeIndexState)
+class ResumeIndexStateAdmin(admin.ModelAdmin):
+    list_display = ['status', 'active_version', 'last_indexed_at']
+    readonly_fields = ['active_version', 'status', 'last_indexed_at', 'last_error']
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+
+@admin.register(ResumeIndexJob)
+class ResumeIndexJobAdmin(admin.ModelAdmin):
+    list_display = ['id', 'status', 'content_hash', 'attempts', 'created_at']
+    list_filter = ['status']
+    readonly_fields = ['content_hash', 'status', 'attempts', 'created_at', 'last_error']
+    ordering = ['-created_at']
+
+    def has_add_permission(self, request):
+        return False
 
 
 @admin.register(Contact)

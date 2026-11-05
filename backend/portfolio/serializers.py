@@ -48,6 +48,7 @@ class ResumeSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(error)
         return value
 
+
 class ContactSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contact
@@ -63,3 +64,20 @@ class ContactReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contact
         fields = ['id', 'name', 'email', 'message', 'created_at']
+
+
+class ChatRequestSerializer(serializers.Serializer):
+    message = serializers.CharField(
+        max_length=500,
+        allow_blank=False,
+        trim_whitespace=True,
+        error_messages={
+            'blank': 'Message cannot be empty.',
+            'max_length': 'Message must be 500 characters or fewer.',
+        },
+    )
+    session_id = serializers.CharField(
+        max_length=128,
+        allow_blank=False,
+        trim_whitespace=True,
+    )

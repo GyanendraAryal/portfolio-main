@@ -172,6 +172,18 @@ if not DEBUG:
     SECURE_CONTENT_TYPE_NOSNIFF = True
     X_FRAME_OPTIONS = "DENY"
 
+# ── CHATBOT ───────────────────────────────────────────────────────────────
+GROQ_API_KEY = config("GROQ_API_KEY", default="")
+HF_API_TOKEN = config("HF_API_TOKEN", default="")
+QDRANT_URL = config("QDRANT_URL", default="")
+QDRANT_API_KEY = config("QDRANT_API_KEY", default="")
+QDRANT_COLLECTION = config("QDRANT_COLLECTION", default="resume_chunks")
+CRON_SECRET = config("CRON_SECRET", default="")
+VISITOR_HASH_SECRET = config("VISITOR_HASH_SECRET", default="change-me-in-production")
+CHAT_RATE_LIMIT_DAILY = config("CHAT_RATE_LIMIT_DAILY", default=15, cast=int)
+CHAT_RATE_LIMIT_BURST = config("CHAT_RATE_LIMIT_BURST", default=5, cast=int)
+RESPONSE_CACHE_TTL = config("RESPONSE_CACHE_TTL", default=3600, cast=int)
+
 # ── LOGGING ───────────────────────────────────────────────────────────────────
 LOGGING = {
     "version": 1,

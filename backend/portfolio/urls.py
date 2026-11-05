@@ -1,5 +1,8 @@
 from django.urls import path
 from .views import (
+    ChatView,
+    CronResumeIndexView,
+    IndexStatusView,
     PortfolioImageListCreateView,
     PortfolioImageDetailView,
     ResumeListView,
@@ -19,4 +22,8 @@ urlpatterns = [
     path('resume/<int:pk>/', ResumeDeleteView.as_view()),
     path('contact/', ContactCreateView.as_view()),
     path('contacts/', ContactListView.as_view()),
+    # Chatbot
+    path('chat/', ChatView.as_view(), name='chat'),
+    path('cron/resume-index/', CronResumeIndexView.as_view(), name='cron_resume_index'),
+    path('index-status/', IndexStatusView.as_view(), name='index_status'),
 ]

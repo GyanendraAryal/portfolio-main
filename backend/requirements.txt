@@ -11,7 +11,7 @@ djangorestframework-simplejwt==5.5.1
 drf-spectacular==0.30.0
 gunicorn==23.0.0
 idna==3.16
-packaging==26.2
+packaging==24.2
 pillow==11.2.1
 psycopg==3.3.4
 psycopg-binary==3.3.4
@@ -23,3 +23,12 @@ sqlparse==0.5.5
 typing_extensions==4.15.0
 urllib3==2.7.0
 whitenoise==6.9.0
+
+# ── Chatbot ───────────────────────────────────────────────────────────────────
+langchain-core==0.3.65
+langchain-groq==0.3.2
+langgraph==0.4.8
+langgraph-checkpoint==2.0.26
+huggingface-hub==1.33.0
+qdrant-client==1.14.3
+pypdf==5.5.0
