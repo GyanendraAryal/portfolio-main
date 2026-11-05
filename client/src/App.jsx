@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router-dom'
-import Navbar from './Components/Navbar'
-import Footer from './Components/Footer'
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 import { PortfolioProfileProvider } from './context/PortfolioProfileContext'
-import ChatWidget from './components/Chat/ChatWidget'
+import ChatWidget from './components/chat/ChatWidget'
 
 function App() {
   return (

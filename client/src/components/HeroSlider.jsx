@@ -13,7 +13,7 @@ const LinkedInIcon = () => (
     <path d="M4.98 3.5C4.98 4.88 3.86 6 2.48 6S0 4.88 0 3.5 1.12 1 2.48 1s2.5 1.12 2.5 2.5zM.5 8h4V24h-4V8zm7.5 0h3.8v2.16h.05c.53-1 1.84-2.16 3.8-2.16 4.07 0 4.82 2.68 4.82 6.16V24h-4v-7.1c0-1.7-.03-3.88-2.37-3.88-2.37 0-2.73 1.85-2.73 3.76V24h-4V8z" />
   </svg>
 )
-import useTypingAnimation from '../Hooks/useTypingAnimation'
+import useTypingAnimation from '../hooks/useTypingAnimation'
 import { getImages, getImageUrl } from '../api'
 import usePortfolioProfile from '../context/usePortfolioProfile'
 

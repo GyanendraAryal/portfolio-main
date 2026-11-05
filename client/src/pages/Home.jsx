@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Monitor, Code2, Layers, LayoutDashboard, Plug, Sparkles } from 'lucide-react'
-import HeroSlider from '../Components/HeroSlider'
-import SkillsSection from '../Components/SkillsSection'
+import HeroSlider from '../components/HeroSlider'
+import SkillsSection from '../components/SkillsSection'
 import { getApiErrorMessage, getServices } from '../api'
 import usePortfolioProfile from '../context/usePortfolioProfile'
 

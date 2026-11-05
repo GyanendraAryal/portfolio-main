@@ -4,16 +4,16 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import './index.css'
 import App from './App'
 import PageWrapper from './animate/PageWrapper'
-import ErrorBoundary from './Components/ErrorBoundary'
-import LoadingFallback from './Components/LoadingFallback'
+import ErrorBoundary from './components/ErrorBoundary'
+import LoadingFallback from './components/LoadingFallback'
 import { ThemeProvider } from './context/ThemeContext'
 import { ChatProvider } from './context/ChatContext'
 
-const Home = lazy(() => import('./Pages/Home'))
-const Services = lazy(() => import('./Pages/Services'))
-const Work = lazy(() => import('./Pages/Work'))
-const Resume = lazy(() => import('./Pages/Resume'))
-const Contact = lazy(() => import('./Pages/Contact'))
+const Home = lazy(() => import('./pages/Home'))
+const Services = lazy(() => import('./pages/Services'))
+const Work = lazy(() => import('./pages/Work'))
+const Resume = lazy(() => import('./pages/Resume'))
+const Contact = lazy(() => import('./pages/Contact'))
 
 const AdminShell = lazy(() => import('./admin/layout/AdminShell'))
 const Dashboard = lazy(() => import('./admin/pages/Dashboard'))
